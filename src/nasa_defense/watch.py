@@ -106,7 +106,7 @@ def _process_source(state_dir: Path, source, sink, dry_run: bool, enrichment: di
 def _update_apophis(sink, dry_run: bool) -> None:
     """Upsert the perpetual Apophis 2029 tracking Issue (best-effort, every run)."""
     days = (date.fromisoformat(config.APOPHIS_DATE) - date.today()).days
-    payload = {"days_until": days}
+    payload: dict[str, object] = {"days_until": days}
     if not dry_run:
         approach = apophis.fetch_approach()
         if approach is not None:
