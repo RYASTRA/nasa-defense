@@ -6,6 +6,7 @@ from pathlib import Path
 
 from . import config, detect, render, state
 from .models import Event
+from .sinks import fanout
 from .sources import apophis, close_approaches, fireballs, neows, sentry
 
 _BASE_LABEL = "planetary-defense"
@@ -92,6 +93,7 @@ def _process_source(state_dir: Path, source, sink, dry_run: bool, enrichment: di
                 print(f"[{event.severity}] {event.type}: {title}")
             else:
                 sink.upsert(event.key, title, body, labels_fn(event))
+                fanout.fan_out(event, title, body)
     except Exception as exc:  # pylint: disable=broad-exception-caught
         print(f"sink {filename}: emit failed: {exc}", file=sys.stderr)
         return [], False
