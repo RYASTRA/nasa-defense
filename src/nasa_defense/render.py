@@ -163,6 +163,31 @@ def _fireball_new(p: dict) -> tuple[str, str]:
     return title, body
 
 
+def _apophis(p: dict) -> tuple[str, str]:
+    days = p["days_until"]
+    title = f"[🛰️ Apophis 2029] {days} days until the 2029-04-13 flyby"
+    rows = ""
+    if "cd" in p:
+        rows = (
+            "| Field | Value |\n|---|---|\n"
+            f"| Closest approach | {p['cd']} UTC |\n"
+            f"| Miss distance | {p['dist_ld']:.2f} lunar distances ({p['dist_au']:.5f} au) |\n"
+            f"| Relative speed | {p['v_rel_kms']:.1f} km/s |\n\n"
+        )
+    body = (
+        f"**99942 Apophis** makes its historic close approach on **2029-04-13** — "
+        f"**{days} days** from now.\n\n"
+        f"{rows}"
+        f"**Why it matters:** An object this size (~340 m) passing this close — about "
+        f"32,000 km above the surface, inside geostationary orbit — happens only about "
+        f"once in 800 years (NASA), and this is the closest such approach ever known in "
+        f"advance. Apophis will be naked-eye visible (~mag 3) across Europe, Africa, and "
+        f"Asia. It is **not** a threat in 2029; impact has been ruled out.\n\n"
+        f"[JPL CAD — 99942](https://ssd-api.jpl.nasa.gov/cad.api?des=99942) · source: `cad.api`"
+    )
+    return title, body
+
+
 _RENDERERS = {
     "SENTRY_NEW": _new,
     "SENTRY_REMOVED": _removed,
@@ -173,6 +198,7 @@ _RENDERERS = {
     "CAD_NEW_CLOSE": _cad_new_close,
     "CAD_SUBLUNAR": _cad_sublunar,
     "FIREBALL_NEW": _fireball_new,
+    "APOPHIS_ANCHOR": _apophis,
 }
 
 

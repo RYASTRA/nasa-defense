@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 import sys
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 from . import config, detect, render, state
 from .models import Event
-from .sources import close_approaches, fireballs, neows, sentry
+from .sources import apophis, close_approaches, fireballs, neows, sentry
 
 _BASE_LABEL = "planetary-defense"
 
@@ -101,6 +101,26 @@ def _process_source(state_dir: Path, source, sink, dry_run: bool, enrichment: di
     return events, True
 
 
+def _update_apophis(sink, dry_run: bool) -> None:
+    """Upsert the perpetual Apophis 2029 tracking Issue (best-effort, every run)."""
+    days = (date.fromisoformat(config.APOPHIS_DATE) - date.today()).days
+    payload = {"days_until": days}
+    if not dry_run:
+        approach = apophis.fetch_approach()
+        if approach is not None:
+            payload.update({"cd": approach.cd, "dist_ld": approach.dist_ld,
+                            "dist_au": approach.dist_au, "v_rel_kms": approach.v_rel_kms})
+    event = Event("APOPHIS_ANCHOR", "apophis:2029", "info", payload)
+    title, body = render.render(event)
+    if dry_run:
+        print(f"[apophis] {title}")
+        return
+    try:
+        sink.upsert(event.key, title, body, [_BASE_LABEL, "apophis"])
+    except Exception as exc:  # pylint: disable=broad-exception-caught
+        print(f"apophis update failed: {exc}", file=sys.stderr)
+
+
 def run(*, state_dir: Path, sink, dry_run: bool = False) -> list[Event]:
     meta = state.load(state_dir / "meta.json")
     cold = not meta or meta.get("cold_start", True)
@@ -109,6 +129,7 @@ def run(*, state_dir: Path, sink, dry_run: bool = False) -> list[Event]:
     if cold:
         if not dry_run:
             _seed(state_dir, sources)
+        _update_apophis(sink, dry_run)
         return []
 
     enrichment = neows.fetch_pha_lookup()  # best-effort; {} on failure
@@ -120,6 +141,7 @@ def run(*, state_dir: Path, sink, dry_run: bool = False) -> list[Event]:
         if not ok:
             failures.append(source[0])
 
+    _update_apophis(sink, dry_run)
     if not dry_run:
         _save_meta(state_dir)
     if failures:
