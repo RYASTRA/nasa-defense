@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import html
+import math
 from datetime import date
 from pathlib import Path
 
@@ -34,16 +35,37 @@ def _format_size(diameter_km: float | None) -> str:
     return f"~{diameter_km:.1f} km" if metres >= 1000 else f"~{metres:.0f} m"
 
 
+def _format_ip_pct(ip: float | None) -> str:
+    if (
+        isinstance(ip, bool)
+        or not isinstance(ip, (int, float))
+        or not math.isfinite(ip)
+        or ip <= 0.0
+    ):
+        return "—"
+    pct = ip * 100
+    if pct >= 10:
+        return f"{pct:.0f}%"
+    if pct >= 1:
+        return f"{pct:.1f}%"
+    if pct >= 0.1:
+        return f"{pct:.2f}%"
+    if pct >= 0.001:
+        return f"{pct:.3f}%"
+    return "<0.001%"
+
+
 def _sentry_rows(sentry: dict) -> str:
     objs = [(des, d) for des, d in sentry.items() if d.get("noteworthy")]
     objs.sort(key=lambda kv: kv[1].get("ps_cum", -99.0), reverse=True)
     rows = [
         f"<tr><td>{_esc(des)}</td><td>{_esc(_format_size(d.get('diameter_km')))}</td>"
         f"<td>{_esc(d.get('ts_max', 0))}</td>"
-        f"<td>{_esc(d.get('ps_cum'))}</td><td>{d.get('ip', 0.0):.2e}</td></tr>"
+        f"<td>{_esc(d.get('ps_cum'))}</td><td>{d.get('ip', 0.0):.2e}</td>"
+        f"<td>{_esc(_format_ip_pct(d.get('ip', 0.0)))}</td></tr>"
         for des, d in objs[:15]
     ]
-    return "".join(rows) or "<tr><td colspan='5' class='muted'>none</td></tr>"
+    return "".join(rows) or "<tr><td colspan='6' class='muted'>none</td></tr>"
 
 
 def _cad_rows(cad: dict) -> str:
@@ -92,7 +114,7 @@ def render(state_dir: Path) -> str:
 <div class="days">{days} days</div>
 <div>until 2029-04-13 — naked-eye visible (~mag 3), and <strong>not</strong> a threat.</div></div>
 <h2>Sentry — noteworthy impact-risk objects</h2>
-<table><tr><th>Object</th><th>Size</th><th>Torino</th><th>Palermo (cum.)</th><th>Impact prob.</th></tr>
+<table><tr><th>Object</th><th>Size</th><th>Torino</th><th>Palermo (cum.)</th><th>Impact prob.</th><th>Impact prob. (%)</th></tr>
 {_sentry_rows(sentry)}</table>
 <h2>Upcoming close approaches</h2>
 <table><tr><th>Object</th><th>Date (UTC)</th><th>Miss distance</th><th>Speed</th><th>Severity</th></tr>
