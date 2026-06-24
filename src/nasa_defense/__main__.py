@@ -21,6 +21,7 @@ def main(argv: list[str] | None = None) -> int:
     sink = None
     if not dry_run:
         from .sinks.github_issues import GitHubIssues  # pylint: disable=import-outside-toplevel
+
         sink = GitHubIssues.from_env()
 
     try:

@@ -22,6 +22,6 @@ def get_json(url: str, params: dict | None = None) -> dict:
                 f"server error {resp.status_code}", request=resp.request, response=resp
             )
         if attempt < config.HTTP_RETRIES - 1:
-            time.sleep(2 ** attempt)
+            time.sleep(2**attempt)
     assert last_exc is not None
     raise last_exc

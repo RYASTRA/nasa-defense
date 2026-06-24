@@ -19,8 +19,16 @@ def _post(url: str, payload: dict) -> None:
 def _send_webhook(event: Event, title: str, body: str) -> None:
     url = os.environ.get("FANOUT_WEBHOOK_URL")
     if url:
-        _post(url, {"type": event.type, "severity": event.severity,
-                    "key": event.key, "title": title, "body": body})
+        _post(
+            url,
+            {
+                "type": event.type,
+                "severity": event.severity,
+                "key": event.key,
+                "title": title,
+                "body": body,
+            },
+        )
 
 
 def _send_slack(event: Event, title: str, body: str) -> None:

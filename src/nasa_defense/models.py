@@ -26,6 +26,7 @@ def parse_cad_date(cd: str) -> date | None:
 @dataclass(frozen=True)
 class SentryObject:
     """Asteroid or comet object from Sentry."""
+
     des: str
     ts_max: int
     ps_cum: float
@@ -61,6 +62,7 @@ class SentryObject:
 @dataclass(frozen=True)
 class Event:
     """Event record for change detection."""
+
     type: str
     key: str
     severity: str
@@ -70,12 +72,13 @@ class Event:
 @dataclass(frozen=True)
 class CloseApproach:
     """A near-Earth close approach from CNEOS CAD."""
+
     des: str
-    cd: str               # calendar date/time, e.g. "2029-Apr-13 21:46"
+    cd: str  # calendar date/time, e.g. "2029-Apr-13 21:46"
     dist_au: float
-    dist_ld: float        # miss distance in lunar distances
+    dist_ld: float  # miss distance in lunar distances
     v_rel_kms: float
-    h: float | None       # absolute magnitude (size proxy)
+    h: float | None  # absolute magnitude (size proxy)
 
     def to_state(self) -> dict[str, Any]:
         return {
@@ -89,11 +92,12 @@ class CloseApproach:
 @dataclass(frozen=True)
 class Fireball:
     """An atmospheric bolide event from CNEOS Fireballs."""
-    date: str               # full timestamp (UTC), unique key
-    impact_e_kt: float      # calculated total impact energy, kilotons
-    energy: float | None    # total radiated energy (x10^10 J)
-    lat: float | None       # signed degrees (N positive, S negative)
-    lon: float | None       # signed degrees (E positive, W negative)
+
+    date: str  # full timestamp (UTC), unique key
+    impact_e_kt: float  # calculated total impact energy, kilotons
+    energy: float | None  # total radiated energy (x10^10 J)
+    lat: float | None  # signed degrees (N positive, S negative)
+    lon: float | None  # signed degrees (E positive, W negative)
 
     def to_state(self) -> dict[str, Any]:
         return {

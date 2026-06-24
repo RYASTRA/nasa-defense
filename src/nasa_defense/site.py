@@ -76,7 +76,7 @@ def render(state_dir: Path) -> str:
 <title>Planetary-Defense Watch</title><style>{_STYLE}</style></head>
 <body>
 <h1>🛰️ Planetary-Defense Watch</h1>
-<p class="muted">Material changes in NASA/JPL near-Earth-object data. Last run: {_esc(meta.get('last_run_utc', 'never'))}</p>
+<p class="muted">Material changes in NASA/JPL near-Earth-object data. Last run: {_esc(meta.get("last_run_utc", "never"))}</p>
 <div class="hero"><div>Apophis 2029 close approach</div>
 <div class="days">{days} days</div>
 <div>until 2029-04-13 — naked-eye visible (~mag 3), and <strong>not</strong> a threat.</div></div>

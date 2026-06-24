@@ -38,19 +38,30 @@ def _now() -> str:
 
 
 def _save_meta(state_dir: Path) -> None:
-    state.save(state_dir / "meta.json",
-               {"schema_version": config.SCHEMA_VERSION, "last_run_utc": _now(),
-                "cold_start": False})
+    state.save(
+        state_dir / "meta.json",
+        {"schema_version": config.SCHEMA_VERSION, "last_run_utc": _now(), "cold_start": False},
+    )
 
 
 def _sources():
     # (state filename, fetch, detect, snapshot, labels)
     return [
         ("sentry.json", sentry.fetch, detect.detect_sentry, detect.sentry_snapshot, labels_for),
-        ("close_approaches.json", close_approaches.fetch, detect.detect_cad,
-         detect.cad_snapshot, labels_cad),
-        ("fireballs.json", fireballs.fetch, detect.detect_fireball,
-         detect.fireball_snapshot, labels_fireball),
+        (
+            "close_approaches.json",
+            close_approaches.fetch,
+            detect.detect_cad,
+            detect.cad_snapshot,
+            labels_cad,
+        ),
+        (
+            "fireballs.json",
+            fireballs.fetch,
+            detect.detect_fireball,
+            detect.fireball_snapshot,
+            labels_fireball,
+        ),
     ]
 
 
@@ -110,8 +121,14 @@ def _update_apophis(sink, dry_run: bool) -> None:
     if not dry_run:
         approach = apophis.fetch_approach()
         if approach is not None:
-            payload.update({"cd": approach.cd, "dist_ld": approach.dist_ld,
-                            "dist_au": approach.dist_au, "v_rel_kms": approach.v_rel_kms})
+            payload.update(
+                {
+                    "cd": approach.cd,
+                    "dist_ld": approach.dist_ld,
+                    "dist_au": approach.dist_au,
+                    "v_rel_kms": approach.v_rel_kms,
+                }
+            )
     event = Event("APOPHIS_ANCHOR", "apophis:2029", "info", payload)
     title, body = render.render(event)
     if dry_run:
