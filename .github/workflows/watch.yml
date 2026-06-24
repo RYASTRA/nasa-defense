@@ -7,6 +7,8 @@ on:
 permissions:
   issues: write
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: watch
@@ -26,6 +28,16 @@ jobs:
           NASA_API_KEY: ${{ secrets.NASA_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
+          # Optional fan-out channels (inactive unless the secret is set)
+          FANOUT_WEBHOOK_URL: ${{ secrets.FANOUT_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          SMTP_TO: ${{ secrets.SMTP_TO }}
         run: python -m nasa_defense
       - name: Commit state
         run: |
@@ -36,3 +48,19 @@ jobs:
             git commit -m "chore: update state [skip ci]"
             git push
           fi
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        continue-on-error: true
+        with:
+          path: site
+
+  publish:
+    needs: watch
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4

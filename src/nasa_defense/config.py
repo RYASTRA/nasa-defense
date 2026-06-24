@@ -45,6 +45,7 @@ NEOWS_FEED = "https://api.nasa.gov/neo/rest/v1/feed"
 
 # --- Paths ---
 STATE_DIR = Path(os.environ.get("NASA_DEFENSE_STATE_DIR", "state"))
+SITE_DIR = Path(os.environ.get("NASA_DEFENSE_SITE_DIR", "site"))
 
 SCHEMA_VERSION = 1
 

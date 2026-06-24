@@ -4,7 +4,7 @@ import sys
 from datetime import date, datetime, timezone
 from pathlib import Path
 
-from . import config, detect, render, state
+from . import config, detect, render, site, state
 from .models import Event
 from .sinks import fanout
 from .sources import apophis, close_approaches, fireballs, neows, sentry
@@ -123,6 +123,16 @@ def _update_apophis(sink, dry_run: bool) -> None:
         print(f"apophis update failed: {exc}", file=sys.stderr)
 
 
+def _maybe_render_site(state_dir: Path) -> None:
+    """Render the static Pages site from committed state (best-effort, non-blocking)."""
+    if not config.SITE_ENABLED:
+        return
+    try:
+        site.write(state_dir, config.SITE_DIR)
+    except Exception as exc:  # pylint: disable=broad-exception-caught
+        print(f"site render failed: {exc}", file=sys.stderr)
+
+
 def run(*, state_dir: Path, sink, dry_run: bool = False) -> list[Event]:
     meta = state.load(state_dir / "meta.json")
     cold = not meta or meta.get("cold_start", True)
@@ -132,6 +142,8 @@ def run(*, state_dir: Path, sink, dry_run: bool = False) -> list[Event]:
         if not dry_run:
             _seed(state_dir, sources)
         _update_apophis(sink, dry_run)
+        if not dry_run:
+            _maybe_render_site(state_dir)
         return []
 
     enrichment = neows.fetch_pha_lookup()  # best-effort; {} on failure
@@ -146,6 +158,7 @@ def run(*, state_dir: Path, sink, dry_run: bool = False) -> list[Event]:
     _update_apophis(sink, dry_run)
     if not dry_run:
         _save_meta(state_dir)
+        _maybe_render_site(state_dir)
     if failures:
         raise RuntimeError(f"source(s) failed this run: {', '.join(failures)}")
     return all_events
