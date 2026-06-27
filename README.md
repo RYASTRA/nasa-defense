@@ -10,7 +10,7 @@ friendly "watch it, tell me when it **materially** changes, and explain why in p
 English" layer on top — with no servers, no database, and no Docker. The GitHub repo
 *is* the deployment.
 
-Quick Look: https://ryroeu.github.io/nasa-defense/
+Quick Look: https://ryastra.github.io/nasa-defense/
 
 ---
 
