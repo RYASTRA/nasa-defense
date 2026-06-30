@@ -9460,7 +9460,7 @@
     "ip": 7.888448e-06,
     "last_obs": "2021-07-14",
     "noteworthy": false,
-    "ps_cum": -6.0,
+    "ps_cum": -5.99,
     "ts_max": 0
   },
   "2021 NM3": {
@@ -17209,10 +17209,10 @@
   },
   "2026 MD": {
     "diameter_km": 0.043,
-    "ip": 3.8467e-07,
+    "ip": 3.5743e-07,
     "last_obs": "2026-06-28",
     "noteworthy": false,
-    "ps_cum": -6.47,
+    "ps_cum": -6.5,
     "ts_max": 0
   },
   "2026 MD1": {
@@ -17241,10 +17241,10 @@
   },
   "2026 MJ1": {
     "diameter_km": 0.012,
-    "ip": 7.61163935e-05,
-    "last_obs": "2026-06-26",
+    "ip": 7.3669837e-05,
+    "last_obs": "2026-06-28",
     "noteworthy": false,
-    "ps_cum": -5.56,
+    "ps_cum": -5.57,
     "ts_max": 0
   },
   "2026 MP1": {
@@ -17264,11 +17264,11 @@
     "ts_max": 0
   },
   "2026 MT1": {
-    "diameter_km": 0.18,
-    "ip": 5.4118324e-06,
+    "diameter_km": 0.17,
+    "ip": 5.02651e-06,
     "last_obs": "2026-06-28",
     "noteworthy": true,
-    "ps_cum": -3.65,
+    "ps_cum": -3.73,
     "ts_max": 0
   },
   "2026 MX1": {
