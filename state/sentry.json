@@ -3100,7 +3100,7 @@
     "ip": 8.608e-08,
     "last_obs": "2013-07-16",
     "noteworthy": false,
-    "ps_cum": -5.84,
+    "ps_cum": -5.82,
     "ts_max": 0
   },
   "2013 NJ4": {
@@ -4508,7 +4508,7 @@
     "ip": 0.0002845893852,
     "last_obs": "2016-08-10",
     "noteworthy": true,
-    "ps_cum": -5.1,
+    "ps_cum": -5.09,
     "ts_max": 0
   },
   "2016 NP56": {
@@ -5964,7 +5964,7 @@
     "ip": 3.229e-08,
     "last_obs": "2018-06-25",
     "noteworthy": false,
-    "ps_cum": -8.57,
+    "ps_cum": -8.56,
     "ts_max": 0
   },
   "2018 LT5": {
@@ -17191,14 +17191,6 @@
     "ps_cum": -5.19,
     "ts_max": 0
   },
-  "2026 LW2": {
-    "diameter_km": 0.012,
-    "ip": 6.131e-08,
-    "last_obs": "2026-06-17",
-    "noteworthy": false,
-    "ps_cum": -8.62,
-    "ts_max": 0
-  },
   "2026 LX": {
     "diameter_km": 0.0057,
     "ip": 8.1524555e-05,
@@ -17241,18 +17233,18 @@
   },
   "2026 MJ1": {
     "diameter_km": 0.012,
-    "ip": 7.3669837e-05,
-    "last_obs": "2026-06-28",
+    "ip": 9.4893294e-05,
+    "last_obs": "2026-06-29",
     "noteworthy": false,
-    "ps_cum": -5.57,
+    "ps_cum": -5.4,
     "ts_max": 0
   },
   "2026 MP1": {
     "diameter_km": 0.096,
-    "ip": 7.427176e-07,
+    "ip": 6.3496e-07,
     "last_obs": "2026-06-26",
     "noteworthy": false,
-    "ps_cum": -4.96,
+    "ps_cum": -5.04,
     "ts_max": 0
   },
   "2026 MR": {
