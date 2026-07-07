@@ -4492,7 +4492,7 @@
     "ip": 2.686e-09,
     "last_obs": "2016-07-13",
     "noteworthy": false,
-    "ps_cum": -9.76,
+    "ps_cum": -9.75,
     "ts_max": 0
   },
   "2016 NK22": {
@@ -17185,10 +17185,10 @@
   },
   "2026 LW": {
     "diameter_km": 0.027,
-    "ip": 2.14323813e-05,
+    "ip": 1.15060794e-05,
     "last_obs": "2026-06-21",
     "noteworthy": false,
-    "ps_cum": -5.19,
+    "ps_cum": -5.46,
     "ts_max": 0
   },
   "2026 LX": {
@@ -17249,10 +17249,10 @@
   },
   "2026 MT1": {
     "diameter_km": 0.17,
-    "ip": 7.36675e-06,
-    "last_obs": "2026-07-06",
+    "ip": 7.88424e-06,
+    "last_obs": "2026-07-07",
     "noteworthy": true,
-    "ps_cum": -3.66,
+    "ps_cum": -3.63,
     "ts_max": 0
   },
   "2026 MX1": {
@@ -17269,6 +17269,14 @@
     "last_obs": "2026-06-23",
     "noteworthy": false,
     "ps_cum": -6.07,
+    "ts_max": 0
+  },
+  "2026 NF": {
+    "diameter_km": 0.022,
+    "ip": 2.757e-07,
+    "last_obs": "2026-07-07",
+    "noteworthy": false,
+    "ps_cum": -6.6,
     "ts_max": 0
   },
   "29075": {
