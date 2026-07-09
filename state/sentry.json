@@ -16412,7 +16412,7 @@
     "ip": 7.86882e-07,
     "last_obs": "2026-01-20",
     "noteworthy": false,
-    "ps_cum": -9.89,
+    "ps_cum": -9.88,
     "ts_max": 0
   },
   "2026 CC": {
@@ -17269,14 +17269,6 @@
     "last_obs": "2026-06-23",
     "noteworthy": false,
     "ps_cum": -6.07,
-    "ts_max": 0
-  },
-  "2026 NF": {
-    "diameter_km": 0.022,
-    "ip": 2.757e-07,
-    "last_obs": "2026-07-07",
-    "noteworthy": false,
-    "ps_cum": -6.6,
     "ts_max": 0
   },
   "29075": {
