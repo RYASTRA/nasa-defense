@@ -3748,7 +3748,7 @@
     "ip": 8.914363e-07,
     "last_obs": "2015-01-23",
     "noteworthy": false,
-    "ps_cum": -6.88,
+    "ps_cum": -6.86,
     "ts_max": 0
   },
   "2015 CL13": {
@@ -4500,7 +4500,7 @@
     "ip": 0.0004705480248,
     "last_obs": "2016-07-11",
     "noteworthy": true,
-    "ps_cum": -5.61,
+    "ps_cum": -5.6,
     "ts_max": 0
   },
   "2016 NL39": {
@@ -17097,10 +17097,10 @@
   },
   "2026 JW2": {
     "diameter_km": 0.005,
-    "ip": 1.31931e-05,
+    "ip": 4.52197e-06,
     "last_obs": "2026-05-15",
     "noteworthy": false,
-    "ps_cum": -7.3,
+    "ps_cum": -7.77,
     "ts_max": 0
   },
   "2026 JX3": {
@@ -17249,10 +17249,10 @@
   },
   "2026 MT1": {
     "diameter_km": 0.17,
-    "ip": 8.56617e-06,
-    "last_obs": "2026-07-11",
+    "ip": 8.21e-06,
+    "last_obs": "2026-07-13",
     "noteworthy": true,
-    "ps_cum": -3.59,
+    "ps_cum": -3.63,
     "ts_max": 0
   },
   "2026 MX1": {
