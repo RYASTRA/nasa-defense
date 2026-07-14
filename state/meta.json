@@ -1,5 +1,10 @@
 {
   "cold_start": false,
-  "last_run_utc": "2026-07-13T14:01:07.289805+00:00",
+  "consecutive_failures": {
+    "close_approaches.json": 0,
+    "fireballs.json": 0,
+    "sentry.json": 0
+  },
+  "last_run_utc": "2026-07-14T20:53:14.368431+00:00",
   "schema_version": 1
 }
