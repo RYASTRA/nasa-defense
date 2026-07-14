@@ -39,7 +39,13 @@ jobs:
           SMTP_FROM: ${{ secrets.SMTP_FROM }}
           SMTP_TO: ${{ secrets.SMTP_TO }}
         run: python -m nasa_defense
+      # These run even when the watcher exits non-zero. A failing run has still earned
+      # the state its healthy sources produced, and has still recorded how long the
+      # unhealthy ones have been down — discarding that on the ephemeral runner would
+      # re-detect (and re-notify) the same events next run, and would reset the
+      # consecutive-failure counter that decides when an outage becomes a hard failure.
       - name: Commit state
+        if: ${{ !cancelled() }}
         run: |
           git config user.name "nasa-defense-bot"
           git config user.email "bot@users.noreply.github.com"
@@ -49,6 +55,7 @@ jobs:
             git push
           fi
       - name: Upload Pages artifact
+        if: ${{ !cancelled() }}
         uses: actions/upload-pages-artifact@v5
         continue-on-error: true
         with:

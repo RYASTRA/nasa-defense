@@ -35,8 +35,20 @@ APOPHIS_DESIGNATION = "99942"
 APOPHIS_DATE = "2029-04-13"
 
 # --- HTTP ---
+# The retries must span enough wall clock to outlast an upstream gateway blip, which is
+# what defeats them — not the attempt count. Equal-jitter backoff over 5 attempts spans
+# 7.5-15s, against the ~3s that let a JPL 502 take down watch run #33.
 HTTP_TIMEOUT_S = 30.0
-HTTP_RETRIES = 3
+HTTP_RETRIES = 5
+HTTP_BACKOFF_BASE_S = 1.0
+HTTP_BACKOFF_CAP_S = 10.0
+
+# --- Source health ---
+# A source that is briefly unreachable is expected and self-healing: its state is not
+# advanced, so the next run re-detects whatever was missed. Only escalate to a hard
+# failure once a source has been down for this many consecutive runs, at which point we
+# may genuinely be blind to something rather than just waiting out an outage.
+SOURCE_FAILURE_LIMIT = 3
 
 # --- Endpoints ---
 SENTRY_API = "https://ssd-api.jpl.nasa.gov/sentry.api"

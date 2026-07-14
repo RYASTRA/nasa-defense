@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+import sys
 from datetime import date, timedelta
 
 from .. import config
@@ -39,7 +40,10 @@ def fetch_pha_lookup(today: date | None = None) -> dict[str, dict]:
     }
     try:
         raw = get_json(config.NEOWS_FEED, params=params)
-    except Exception:  # pylint: disable=broad-exception-caught
+    except Exception as exc:  # pylint: disable=broad-exception-caught
+        # Non-critical, but say so: silently returning {} strips the PHA flag and the
+        # diameter off every issue this run, with nothing anywhere to explain why.
+        print(f"neows enrichment unavailable: {exc}", file=sys.stderr)
         return {}
 
     lookup: dict[str, dict] = {}

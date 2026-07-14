@@ -37,11 +37,39 @@ def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def _save_meta(state_dir: Path) -> None:
+def _save_meta(state_dir: Path, streaks: dict[str, int] | None = None) -> None:
     state.save(
         state_dir / "meta.json",
-        {"schema_version": config.SCHEMA_VERSION, "last_run_utc": _now(), "cold_start": False},
+        {
+            "schema_version": config.SCHEMA_VERSION,
+            "last_run_utc": _now(),
+            "cold_start": False,
+            "consecutive_failures": streaks or {},
+        },
     )
+
+
+def _report(streaks: dict[str, int]) -> None:
+    """Decide how loudly to complain about the sources that failed this run.
+
+    A source that is briefly unreachable is expected and self-healing: `_process_source`
+    deliberately did not advance its state, so the next run re-detects whatever was
+    missed. Failing the whole job over a transient upstream 502 only trains us to ignore
+    a red X. So warn while a source is merely flapping, and escalate to a hard failure
+    once it has been down long enough that we may genuinely be blind to something.
+    """
+    down = {name: n for name, n in sorted(streaks.items()) if n > 0}
+    for name, count in down.items():
+        # Workflow commands are read from stdout, so this must not go to stderr, or the
+        # annotation never surfaces on the run.
+        print(f"::warning::source {name} unavailable ({count} run(s) in a row)")
+
+    sustained = [name for name, n in down.items() if n >= config.SOURCE_FAILURE_LIMIT]
+    if sustained:
+        raise RuntimeError(
+            f"source(s) down for {config.SOURCE_FAILURE_LIMIT}+ consecutive runs: "
+            f"{', '.join(sustained)}"
+        )
 
 
 def _sources():
@@ -164,18 +192,20 @@ def run(*, state_dir: Path, sink, dry_run: bool = False) -> list[Event]:
         return []
 
     enrichment = neows.fetch_pha_lookup()  # best-effort; {} on failure
+    streaks: dict[str, int] = dict(meta.get("consecutive_failures") or {})
     all_events: list[Event] = []
-    failures: list[str] = []
     for source in sources:
+        filename = source[0]
         events, ok = _process_source(state_dir, source, sink, dry_run, enrichment)
         all_events.extend(events)
-        if not ok:
-            failures.append(source[0])
+        streaks[filename] = 0 if ok else streaks.get(filename, 0) + 1
 
     _update_apophis(sink, dry_run)
     if not dry_run:
-        _save_meta(state_dir)
+        # Persist before reporting: `_report` may raise, and the streak counter it will
+        # read on the next run has to survive a failing run to be able to count at all.
+        _save_meta(state_dir, streaks)
         _maybe_render_site(state_dir)
-    if failures:
-        raise RuntimeError(f"source(s) failed this run: {', '.join(failures)}")
+
+    _report(streaks)
     return all_events
