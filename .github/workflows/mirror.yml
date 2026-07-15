@@ -2,6 +2,12 @@ name: Mirror to GitLab
 
 on: [push, delete]
 
+# Least privilege: this workflow only reads the repo to mirror it, and pushes to GitLab
+# with GITLAB_TOKEN — it never uses GITHUB_TOKEN to write back. Pin the token to read so
+# a compromised third-party action can't inherit the repo's default write scope.
+permissions:
+  contents: read
+
 jobs:
   mirror:
     runs-on: ubuntu-latest
