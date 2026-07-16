@@ -6300,7 +6300,7 @@
     "ip": 1.370949e-07,
     "last_obs": "2018-12-18",
     "noteworthy": false,
-    "ps_cum": -5.5,
+    "ps_cum": -5.45,
     "ts_max": 0
   },
   "2018 YO2": {
@@ -11948,7 +11948,7 @@
     "ip": 4.0202e-07,
     "last_obs": "2023-01-30",
     "noteworthy": false,
-    "ps_cum": -8.02,
+    "ps_cum": -8.01,
     "ts_max": 0
   },
   "2023 BU7": {
@@ -12052,7 +12052,7 @@
     "ip": 1.233074e-07,
     "last_obs": "2023-02-28",
     "noteworthy": false,
-    "ps_cum": -7.51,
+    "ps_cum": -7.5,
     "ts_max": 0
   },
   "2023 EB": {
@@ -15524,7 +15524,7 @@
     "ip": 3.579e-07,
     "last_obs": "2025-07-29",
     "noteworthy": false,
-    "ps_cum": -7.08,
+    "ps_cum": -7.06,
     "ts_max": 0
   },
   "2025 OV20": {
@@ -17249,10 +17249,10 @@
   },
   "2026 MT1": {
     "diameter_km": 0.16,
-    "ip": 1.251e-06,
+    "ip": 2.108e-06,
     "last_obs": "2026-07-14",
     "noteworthy": true,
-    "ps_cum": -4.46,
+    "ps_cum": -4.24,
     "ts_max": 0
   },
   "2026 MX1": {
@@ -17265,10 +17265,10 @@
   },
   "2026 MY1": {
     "diameter_km": 0.012,
-    "ip": 1.671675e-05,
-    "last_obs": "2026-06-23",
+    "ip": 1.829881e-05,
+    "last_obs": "2026-07-08",
     "noteworthy": false,
-    "ps_cum": -6.07,
+    "ps_cum": -6.03,
     "ts_max": 0
   },
   "29075": {
