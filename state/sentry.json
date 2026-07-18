@@ -7956,7 +7956,7 @@
     "ip": 3.7154629e-05,
     "last_obs": "2020-08-07",
     "noteworthy": false,
-    "ps_cum": -6.22,
+    "ps_cum": -6.21,
     "ts_max": 0
   },
   "2020 PJ6": {
@@ -9452,7 +9452,7 @@
     "ip": 0.00020566,
     "last_obs": "2021-07-15",
     "noteworthy": true,
-    "ps_cum": -6.14,
+    "ps_cum": -6.13,
     "ts_max": 0
   },
   "2021 NL8": {
@@ -12540,7 +12540,7 @@
     "ip": 1.539e-07,
     "last_obs": "2023-07-25",
     "noteworthy": false,
-    "ps_cum": -7.15,
+    "ps_cum": -7.14,
     "ts_max": 0
   },
   "2023 OR1": {
@@ -13868,7 +13868,7 @@
     "ip": 5.50133e-06,
     "last_obs": "2024-09-12",
     "noteworthy": false,
-    "ps_cum": -7.57,
+    "ps_cum": -7.56,
     "ts_max": 0
   },
   "2024 RA5": {
@@ -15508,7 +15508,7 @@
     "ip": 6e-08,
     "last_obs": "2025-07-17",
     "noteworthy": false,
-    "ps_cum": -8.88,
+    "ps_cum": -8.87,
     "ts_max": 0
   },
   "2025 OE4": {
@@ -15516,7 +15516,7 @@
     "ip": 1.612276e-07,
     "last_obs": "2025-07-30",
     "noteworthy": false,
-    "ps_cum": -7.56,
+    "ps_cum": -7.55,
     "ts_max": 0
   },
   "2025 OF": {
@@ -16612,7 +16612,7 @@
     "ip": 2.76644e-07,
     "last_obs": "2026-03-10",
     "noteworthy": false,
-    "ps_cum": -8.2,
+    "ps_cum": -8.19,
     "ts_max": 0
   },
   "2026 EL2": {
@@ -17233,10 +17233,10 @@
   },
   "2026 MP1": {
     "diameter_km": 0.096,
-    "ip": 6.3496e-07,
+    "ip": 7.546509e-07,
     "last_obs": "2026-06-26",
     "noteworthy": false,
-    "ps_cum": -5.04,
+    "ps_cum": -4.95,
     "ts_max": 0
   },
   "2026 MR": {
@@ -17249,10 +17249,10 @@
   },
   "2026 MT1": {
     "diameter_km": 0.16,
-    "ip": 2.146e-06,
+    "ip": 7.922e-07,
     "last_obs": "2026-07-16",
     "noteworthy": true,
-    "ps_cum": -4.23,
+    "ps_cum": -4.66,
     "ts_max": 0
   },
   "2026 MX1": {
@@ -17269,6 +17269,30 @@
     "last_obs": "2026-07-08",
     "noteworthy": false,
     "ps_cum": -6.03,
+    "ts_max": 0
+  },
+  "2026 OC": {
+    "diameter_km": 0.012,
+    "ip": 8.753219e-06,
+    "last_obs": "2026-07-17",
+    "noteworthy": false,
+    "ps_cum": -6.2,
+    "ts_max": 0
+  },
+  "2026 OD": {
+    "diameter_km": 0.0683,
+    "ip": 4.37077596e-05,
+    "last_obs": "2026-07-18",
+    "noteworthy": false,
+    "ps_cum": -3.59,
+    "ts_max": 0
+  },
+  "2026 OG": {
+    "diameter_km": 0.0049,
+    "ip": 3.006385e-06,
+    "last_obs": "2026-07-18",
+    "noteworthy": false,
+    "ps_cum": -7.84,
     "ts_max": 0
   },
   "29075": {
