@@ -1588,7 +1588,7 @@
     "ip": 2.291465e-07,
     "last_obs": "2009-01-31",
     "noteworthy": false,
-    "ps_cum": -5.09,
+    "ps_cum": -5.08,
     "ts_max": 0
   },
   "2009 CZ1": {
@@ -4164,7 +4164,7 @@
     "ip": 1.4482962e-05,
     "last_obs": "2016-01-31",
     "noteworthy": false,
-    "ps_cum": -5.43,
+    "ps_cum": -5.42,
     "ts_max": 0
   },
   "2016 BQ15": {
@@ -11044,7 +11044,7 @@
     "ip": 9.22534e-06,
     "last_obs": "2022-10-25",
     "noteworthy": false,
-    "ps_cum": -4.92,
+    "ps_cum": -4.91,
     "ts_max": 0
   },
   "2022 NK": {
@@ -13252,7 +13252,7 @@
     "ip": 1.5437364e-05,
     "last_obs": "2023-12-12",
     "noteworthy": false,
-    "ps_cum": -5.27,
+    "ps_cum": -5.26,
     "ts_max": 0
   },
   "2023 XU5": {
@@ -17247,14 +17247,6 @@
     "ps_cum": -7.01,
     "ts_max": 0
   },
-  "2026 MT1": {
-    "diameter_km": 0.16,
-    "ip": 7.922e-07,
-    "last_obs": "2026-07-16",
-    "noteworthy": true,
-    "ps_cum": -4.66,
-    "ts_max": 0
-  },
   "2026 MX1": {
     "diameter_km": 0.0086,
     "ip": 1.421e-05,
@@ -17280,11 +17272,11 @@
     "ts_max": 0
   },
   "2026 OD": {
-    "diameter_km": 0.0681,
-    "ip": 6.94817267e-05,
+    "diameter_km": 0.067,
+    "ip": 2.4514014e-05,
     "last_obs": "2026-07-18",
     "noteworthy": false,
-    "ps_cum": -3.36,
+    "ps_cum": -3.95,
     "ts_max": 0
   },
   "2026 OG": {
@@ -17296,11 +17288,11 @@
     "ts_max": 0
   },
   "2026 OK": {
-    "diameter_km": 0.022,
-    "ip": 1.27e-07,
+    "diameter_km": 0.021,
+    "ip": 2.365e-07,
     "last_obs": "2026-07-19",
     "noteworthy": false,
-    "ps_cum": -7.71,
+    "ps_cum": -7.51,
     "ts_max": 0
   },
   "29075": {
