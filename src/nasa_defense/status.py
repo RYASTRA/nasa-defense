@@ -1,8 +1,8 @@
 """Observatory status contract (schema 1) for this site.
 
 Emits the small, stable status.json the NASA Observatory reads from every
-fleet site's root. Contract spec:
-https://github.com/RYASTRA/nasa-observatory/blob/main/docs/superpowers/specs/2026-07-22-nasa-observatory-design.md
+fleet site's root. The contract is specified in the nasa-observatory
+repo: docs/superpowers/specs/2026-07-22-nasa-observatory-design.md
 
 Display strings are decided HERE — the Observatory renders them verbatim.
 Bounds: headline <= 120 chars, <= 5 items, item text <= 140 chars.
