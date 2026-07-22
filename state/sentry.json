@@ -17280,19 +17280,19 @@
     "ts_max": 0
   },
   "2026 OD": {
-    "diameter_km": 0.069,
-    "ip": 1.52244586e-05,
-    "last_obs": "2026-07-20",
+    "diameter_km": 0.071,
+    "ip": 1.8214717e-05,
+    "last_obs": "2026-07-21",
     "noteworthy": false,
-    "ps_cum": -4.18,
+    "ps_cum": -4.14,
     "ts_max": 0
   },
   "2026 OG": {
-    "diameter_km": 0.0049,
-    "ip": 3.006385e-06,
-    "last_obs": "2026-07-18",
+    "diameter_km": 0.0047,
+    "ip": 3.08646e-06,
+    "last_obs": "2026-07-20",
     "noteworthy": false,
-    "ps_cum": -7.84,
+    "ps_cum": -7.87,
     "ts_max": 0
   },
   "2026 OK": {
