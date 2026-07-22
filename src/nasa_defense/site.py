@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import html
+import json
 import math
 from datetime import date
 from pathlib import Path
@@ -146,5 +147,11 @@ def render(state_dir: Path) -> str:
 
 
 def write(state_dir: Path, out_dir: Path) -> None:
+    # imported here, not at module top: status uses this module's size formatter
+    from . import status  # pylint: disable=import-outside-toplevel,cyclic-import
+
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "index.html").write_text(render(state_dir), encoding="utf-8")
+    (out_dir / "status.json").write_text(
+        json.dumps(status.build(state_dir), indent=1) + "\n", encoding="utf-8"
+    )
