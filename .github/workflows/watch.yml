@@ -23,7 +23,7 @@ jobs:
           # Full history so "Commit state" can rebase onto a moved main without
           # tripping over a shallow boundary. The repo is tiny; this costs nothing.
           fetch-depth: 0
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.14"
       - run: pip install -e "."
