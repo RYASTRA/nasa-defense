@@ -57,7 +57,9 @@ def build(state_dir: Path) -> dict:
     upcoming = _upcoming(cad)
     if upcoming:
         when, des, fields = upcoming[0]
-        headline = f"Next close approach: {des} — {when:%b %-d} ({fields.get('dist_ld', 0.0):.2f} LD)"
+        headline = (
+            f"Next close approach: {des} — {when:%b %-d} ({fields.get('dist_ld', 0.0):.2f} LD)"
+        )
     else:
         headline = "No upcoming close approaches on file"
 

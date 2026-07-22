@@ -20,13 +20,22 @@ def _seed(tmp_path, *, failures: int = 0) -> None:
             # deliberately unsorted: the far approach first, a PAST one in the
             # middle — build() must drop the past one and sort soonest-first
             f"2026 FAR:{_cad(today + timedelta(days=60))}": {
-                "dist_ld": 4.95, "h": 26.1, "severity": "info", "v_rel_kms": 9.6,
+                "dist_ld": 4.95,
+                "h": 26.1,
+                "severity": "info",
+                "v_rel_kms": 9.6,
             },
             f"2010 PAST:{_cad(today - timedelta(days=30))}": {
-                "dist_ld": 0.50, "h": 22.0, "severity": "critical", "v_rel_kms": 20.0,
+                "dist_ld": 0.50,
+                "h": 22.0,
+                "severity": "critical",
+                "v_rel_kms": 20.0,
             },
             f"2026 SOON:{_cad(today + timedelta(days=25))}": {
-                "dist_ld": 2.19, "h": 22.75, "severity": "high", "v_rel_kms": 12.4,
+                "dist_ld": 2.19,
+                "h": 22.75,
+                "severity": "high",
+                "v_rel_kms": 12.4,
             },
         },
     )
@@ -94,9 +103,14 @@ def test_no_upcoming_approaches_headline(tmp_path):
     today = date.today()
     state.save(
         tmp_path / "close_approaches.json",
-        {f"2010 PAST:{_cad(today - timedelta(days=30))}": {
-            "dist_ld": 0.5, "h": 22.0, "severity": "info", "v_rel_kms": 20.0,
-        }},
+        {
+            f"2010 PAST:{_cad(today - timedelta(days=30))}": {
+                "dist_ld": 0.5,
+                "h": 22.0,
+                "severity": "info",
+                "v_rel_kms": 20.0,
+            }
+        },
     )
     doc = status.build(tmp_path)
     assert doc["headline"] == "No upcoming close approaches on file"
