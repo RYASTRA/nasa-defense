@@ -1,3 +1,4 @@
+"""Optional outbound notification channels: generic webhook, Slack, Discord, and email."""
 from __future__ import annotations
 
 import os

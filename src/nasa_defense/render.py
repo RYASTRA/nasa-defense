@@ -1,3 +1,4 @@
+"""Issue title and body templates for each detected event type."""
 from __future__ import annotations
 
 from urllib.parse import quote
@@ -203,6 +204,11 @@ _RENDERERS = {
 
 
 def render(event: Event) -> tuple[str, str]:
+    """Render an event into an issue title and body, with its key marker appended.
+
+    Raises:
+        ValueError: when the event type has no registered renderer.
+    """
     fn = _RENDERERS.get(event.type)
     if fn is None:
         raise ValueError(f"no renderer for event type {event.type!r}")

@@ -1,3 +1,4 @@
+"""CNEOS Fireball atmospheric-bolide data: fetch and parse into Fireball records."""
 from __future__ import annotations
 
 from datetime import date, timedelta
@@ -26,6 +27,7 @@ def _signed(row: list, idx: dict, mag_field: str, dir_field: str, negative: str)
 
 
 def parse(raw: dict) -> list[Fireball]:
+    """Convert a raw Fireball payload into records, skipping rows with no date or energy."""
     fields = raw.get("fields") or []
     idx = {name: i for i, name in enumerate(fields)}
     fireballs: list[Fireball] = []
@@ -47,6 +49,7 @@ def parse(raw: dict) -> list[Fireball]:
 
 
 def fetch(today: date | None = None) -> list[Fireball]:
+    """Fetch fireballs recorded inside the configured look-back window."""
     today = today or date.today()
     params = {"date-min": (today - timedelta(days=config.FIREBALL_LOOKBACK_DAYS)).isoformat()}
     return parse(get_json(config.FIREBALL_API, params=params))

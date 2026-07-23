@@ -1,3 +1,4 @@
+"""Run orchestration: fetch every source, detect changes, emit, and persist state."""
 from __future__ import annotations
 
 import sys
@@ -13,6 +14,7 @@ _BASE_LABEL = "planetary-defense"
 
 
 def labels_for(event: Event) -> list[str]:
+    """Issue labels for a Sentry event, tagging objects currently rated Torino >= 1."""
     labels = [_BASE_LABEL, "sentry", f"severity-{event.severity}"]
     # Label objects currently at Torino >= 1, read from the actual Torino value the
     # event carries (TORINO_UP/DOWN expose `ts_now`; SENTRY_NEW exposes `ts_max`).
@@ -23,6 +25,7 @@ def labels_for(event: Event) -> list[str]:
 
 
 def labels_cad(event: Event) -> list[str]:
+    """Issue labels for a close-approach event, tagging sub-lunar passes."""
     labels = [_BASE_LABEL, "close-approach", f"severity-{event.severity}"]
     if event.type == "CAD_SUBLUNAR":
         labels.append("sub-lunar")
@@ -30,6 +33,7 @@ def labels_cad(event: Event) -> list[str]:
 
 
 def labels_fireball(event: Event) -> list[str]:
+    """Issue labels for a fireball event."""
     return [_BASE_LABEL, "fireball", f"severity-{event.severity}"]
 
 
@@ -179,6 +183,13 @@ def _maybe_render_site(state_dir: Path) -> None:
 
 
 def run(*, state_dir: Path, sink, dry_run: bool = False) -> list[Event]:
+    """Run every source once and return the events emitted.
+
+    On a cold start this seeds each source's snapshot and emits nothing — otherwise the first
+    run would alert on the entire pre-existing backlog. A source that fails deliberately does
+    not advance its state, so the next run re-detects whatever was missed; sustained failures
+    are counted across runs and eventually raised.
+    """
     meta = state.load(state_dir / "meta.json")
     cold = not meta or meta.get("cold_start", True)
     sources = _sources()

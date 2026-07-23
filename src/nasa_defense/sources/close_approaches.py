@@ -1,3 +1,4 @@
+"""CNEOS CAD close-approach data: fetch and parse into CloseApproach records."""
 from __future__ import annotations
 
 from datetime import date, timedelta
@@ -16,6 +17,12 @@ def _to_float(value: Any) -> float | None:
 
 
 def parse(raw: dict) -> list[CloseApproach]:
+    """Convert a raw CAD payload into CloseApproach records.
+
+    CAD returns column-oriented data — a `fields` list naming the columns and `data` rows
+    positioned against it — so columns are resolved by name, and rows missing a designation,
+    date, or distance are skipped.
+    """
     fields = raw.get("fields") or []
     idx = {name: i for i, name in enumerate(fields)}
     approaches: list[CloseApproach] = []
@@ -40,6 +47,7 @@ def parse(raw: dict) -> list[CloseApproach]:
 
 
 def fetch(today: date | None = None) -> list[CloseApproach]:
+    """Fetch approaches inside the configured look-back, look-ahead, and distance window."""
     today = today or date.today()
     params = {
         "date-min": (today - timedelta(days=config.FETCH_LOOKBACK_DAYS)).isoformat(),

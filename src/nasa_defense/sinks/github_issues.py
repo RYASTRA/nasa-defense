@@ -1,3 +1,4 @@
+"""GitHub Issues sink: one upserted issue per event key, located via an embedded marker."""
 from __future__ import annotations
 
 import os
@@ -10,6 +11,7 @@ BASE_LABEL = "planetary-defense"
 
 
 def key_marker(key: str) -> str:
+    """The hidden HTML comment stamped into an issue body to make it findable by event key."""
     return f"<!-- nasa-defense-key: {key} -->"
 
 
@@ -27,6 +29,7 @@ class GitHubIssues:
 
     @classmethod
     def from_env(cls) -> "GitHubIssues":
+        """Build a sink from the GITHUB_TOKEN and GITHUB_REPOSITORY variables Actions provides."""
         token = os.environ["GITHUB_TOKEN"]
         repo = os.environ["GITHUB_REPOSITORY"]
         return cls(token=token, repo=repo)
@@ -52,6 +55,11 @@ class GitHubIssues:
             page += 1
 
     def upsert(self, key: str, title: str, body: str, labels: list[str]) -> dict[str, Any]:
+        """Create the issue for `key`, or update and reopen the existing one.
+
+        Returns:
+            A dict carrying the action taken ("created" or "updated") and the issue number.
+        """
         existing = self._find_by_key(key)
         if existing is None:
             resp = self.client.post(

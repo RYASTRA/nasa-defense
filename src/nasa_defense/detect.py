@@ -1,3 +1,4 @@
+"""Change detection: diff the previous run's snapshot against current data into events."""
 from __future__ import annotations
 
 from datetime import date
@@ -14,6 +15,13 @@ def _sev(event_type: str, obj: SentryObject) -> str:
 
 
 def detect_sentry(previous: dict[str, dict[str, Any]], current: list[SentryObject]) -> list[Event]:
+    """Diff Sentry objects against the previous snapshot into risk-change events.
+
+    Emits SENTRY_NEW for newly noteworthy objects, TORINO_UP/DOWN on Torino scale movement,
+    PALERMO_UP and IP_JUMP on material risk increases, and SENTRY_REMOVED when a previously
+    noteworthy object drops off the table — usually because fresh observations refined it
+    off the risk list entirely.
+    """
     events: list[Event] = []
     current_by_des = {o.des: o for o in current}
 
@@ -122,10 +130,12 @@ def detect_sentry(previous: dict[str, dict[str, Any]], current: list[SentryObjec
 
 
 def sentry_snapshot(current: list[SentryObject]) -> dict[str, dict]:
+    """Current Sentry objects keyed by designation, to persist as the next run's baseline."""
     return {o.des: o.to_state() for o in current}
 
 
 def cad_severity(approach: CloseApproach) -> str:
+    """Severity for an approach: critical inside one lunar distance, high if near or large."""
     if approach.dist_ld < 1.0:
         return "critical"
     if approach.dist_ld < config.CAD_HIGH_LD or (
@@ -147,6 +157,7 @@ def _cad_payload(approach: CloseApproach) -> dict[str, Any]:
 
 
 def detect_cad(previous: dict[str, dict[str, Any]], current: list[CloseApproach]) -> list[Event]:
+    """New close approaches worth alerting on, skipping past and already-reported passes."""
     events: list[Event] = []
     today = date.today()
     for approach in current:
@@ -167,14 +178,17 @@ def detect_cad(previous: dict[str, dict[str, Any]], current: list[CloseApproach]
 
 
 def cad_snapshot(current: list[CloseApproach]) -> dict[str, dict]:
+    """Current approaches keyed by designation and date, to persist as the next run's baseline."""
     return {f"{a.des}:{a.cd}": {**a.to_state(), "severity": cad_severity(a)} for a in current}
 
 
 def fireball_severity(fireball: Fireball) -> str:
+    """Severity for a bolide, derived from its total calculated impact energy."""
     return "high" if fireball.impact_e_kt >= config.FIREBALL_HIGH_KT else "info"
 
 
 def detect_fireball(previous: dict[str, dict[str, Any]], current: list[Fireball]) -> list[Event]:
+    """Fireballs not seen in a previous run and above the configured reporting energy floor."""
     events: list[Event] = []
     for fireball in current:
         if fireball.date in previous:
@@ -199,4 +213,5 @@ def detect_fireball(previous: dict[str, dict[str, Any]], current: list[Fireball]
 
 
 def fireball_snapshot(current: list[Fireball]) -> dict[str, dict]:
+    """Current fireballs keyed by timestamp, to persist as the next run's baseline."""
     return {fb.date: fb.to_state() for fb in current}
