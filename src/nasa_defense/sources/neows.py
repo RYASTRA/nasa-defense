@@ -1,3 +1,4 @@
+"""Best-effort NeoWs enrichment: hazard flags and diameter estimates keyed by designation."""
 from __future__ import annotations
 
 import re

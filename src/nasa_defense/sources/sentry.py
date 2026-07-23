@@ -1,3 +1,4 @@
+"""CNEOS Sentry impact-risk table: fetch and parse into SentryObject records."""
 from __future__ import annotations
 
 from typing import Any
@@ -20,6 +21,12 @@ def _to_int(value: Any) -> int:
 
 
 def parse(raw: dict) -> list[SentryObject]:
+    """Convert a raw Sentry payload into records, skipping rows carrying no designation.
+
+    A missing cumulative Palermo score becomes -99.0 rather than None so the value stays
+    orderable against the configured floor, instead of forcing every comparison to guard
+    for None.
+    """
     objects: list[SentryObject] = []
     for row in raw.get("data", []):
         des = row.get("des")
@@ -40,4 +47,5 @@ def parse(raw: dict) -> list[SentryObject]:
 
 
 def fetch() -> list[SentryObject]:
+    """Fetch and parse the current Sentry risk table."""
     return parse(get_json(config.SENTRY_API))

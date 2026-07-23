@@ -1,3 +1,4 @@
+"""Static HTML dashboard generated from the committed state snapshots."""
 # pylint: disable=line-too-long
 from __future__ import annotations
 
@@ -117,6 +118,7 @@ def _fireball_rows(fireballs: dict) -> str:
 
 
 def render(state_dir: Path) -> str:
+    """Build the dashboard HTML from the state snapshots in `state_dir`."""
     sentry = state.load(state_dir / "sentry.json")
     cad = state.load(state_dir / "close_approaches.json")
     fireballs = state.load(state_dir / "fireballs.json")
@@ -148,6 +150,7 @@ def render(state_dir: Path) -> str:
 
 def write(state_dir: Path, out_dir: Path) -> None:
     # imported here, not at module top: status uses this module's size formatter
+    """Write index.html and status.json for the Pages site into `out_dir`."""
     from . import status  # pylint: disable=import-outside-toplevel,cyclic-import
 
     out_dir.mkdir(parents=True, exist_ok=True)
