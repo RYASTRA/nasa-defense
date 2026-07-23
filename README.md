@@ -171,3 +171,15 @@ the edges and is wired together only in `watch.py`.
 - Alerting is **at-least-once**: an Issue is emitted before its snapshot is saved, so a
   failed run re-detects and re-alerts next cycle (idempotent upserts make that harmless).
 - License: [MIT](LICENSE).
+
+## The RYASTRA fleet
+
+| Repo | What it is |
+|---|---|
+| **nasa-defense** | Planetary-defense watch (the original watcher engine) *(this repo)* |
+| [nasa-mcp](https://github.com/RYASTRA/nasa-mcp) | All 16 NASA public APIs as an MCP server (R&D layer) |
+| [nasa-new-worlds](https://github.com/RYASTRA/nasa-new-worlds) | New-worlds watch — exoplanet confirmations |
+| [nasa-observatory](https://github.com/RYASTRA/nasa-observatory) | Fleet dashboard — one tile per watcher |
+| [nasa-space-biology](https://github.com/RYASTRA/nasa-space-biology) | Faceted explorer for OSDR space-biology studies |
+| [nasa-space-weather](https://github.com/RYASTRA/nasa-space-weather) | Space-weather watch |
+| [nasa-tech-explorer](https://github.com/RYASTRA/nasa-tech-explorer) | NASA patents, free software & spinoffs — searchable |
