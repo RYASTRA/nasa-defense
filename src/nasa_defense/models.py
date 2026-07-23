@@ -1,3 +1,4 @@
+"""Dataclasses for the tracked near-Earth-object records and the events derived from them."""
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -10,6 +11,7 @@ SEVERITY_RANK = {"info": 0, "high": 1, "critical": 2}
 
 
 def severity_at_least(sev: str, floor: str) -> bool:
+    """True when `sev` ranks at least as high as `floor` on the info < high < critical scale."""
     return SEVERITY_RANK[sev] >= SEVERITY_RANK[floor]
 
 
@@ -36,10 +38,17 @@ class SentryObject:
 
     @property
     def diameter_m(self) -> float | None:
+        """Estimated diameter in metres, or None when Sentry publishes no size estimate."""
         return None if self.diameter_km is None else self.diameter_km * 1000.0
 
     @property
     def noteworthy(self) -> bool:
+        """Whether this object clears any single materiality threshold.
+
+        Deliberately an OR rather than an AND: an object earns attention if it is large, or rated
+        on the Torino scale, or has a high cumulative Palermo score, or a non-trivial impact
+        probability. Any one of those alone justifies alerting.
+        """
         d = self.diameter_m
         return (
             self.ps_cum >= config.PALERMO_FLOOR
@@ -49,6 +58,7 @@ class SentryObject:
         )
 
     def to_state(self) -> dict[str, Any]:
+        """Serialise the fields that change detection compares between runs."""
         return {
             "ts_max": self.ts_max,
             "ps_cum": self.ps_cum,
@@ -81,6 +91,7 @@ class CloseApproach:
     h: float | None  # absolute magnitude (size proxy)
 
     def to_state(self) -> dict[str, Any]:
+        """Serialise the fields that change detection compares between runs."""
         return {
             "dist_au": self.dist_au,
             "dist_ld": self.dist_ld,
@@ -100,6 +111,7 @@ class Fireball:
     lon: float | None  # signed degrees (E positive, W negative)
 
     def to_state(self) -> dict[str, Any]:
+        """Serialise the fields that change detection compares between runs."""
         return {
             "impact_e_kt": self.impact_e_kt,
             "energy": self.energy,

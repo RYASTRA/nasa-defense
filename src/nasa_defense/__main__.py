@@ -1,3 +1,4 @@
+"""Command-line entry point: `python -m nasa_defense [--dry-run]`."""
 from __future__ import annotations
 
 import os
@@ -7,6 +8,7 @@ from . import config, watch
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Run one watch cycle and return a process exit status (0 on success, 1 on failure)."""
     config.load_dotenv()
     if not os.environ.get("NASA_API_KEY"):
         print(

@@ -1,3 +1,4 @@
+"""Designation-scoped lookup for the 2029 Apophis flyby that anchors the site and issue."""
 from __future__ import annotations
 
 from .. import config

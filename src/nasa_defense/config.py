@@ -1,3 +1,4 @@
+"""Tunable thresholds, API endpoints, and filesystem paths resolved from the environment."""
 from __future__ import annotations
 
 import os
@@ -64,6 +65,11 @@ SCHEMA_VERSION = 1
 
 
 def nasa_api_key() -> str:
+    """Return the NASA API key from the environment.
+
+    Raises:
+        RuntimeError: when NASA_API_KEY is unset, naming the places it can be set.
+    """
     key = os.environ.get("NASA_API_KEY")
     if not key:
         raise RuntimeError(
