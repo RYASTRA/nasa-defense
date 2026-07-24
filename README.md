@@ -25,7 +25,8 @@ Once a day, a GitHub Actions job:
    hallucination risk). Issues are idempotent: the same object updates in place rather
    than spamming duplicates.
 4. **Optionally fans out** high-signal alerts to Slack / Discord / a webhook / email.
-5. **Publishes a static status page** to GitHub Pages.
+5. **Publishes an interactive static observatory** to GitHub Pages — live posture,
+   upcoming-pass cards, a searchable Sentry catalog, fireball context, and source health.
 6. **Commits the new snapshot** so git history becomes a tamper-evident "what changed when" ledger.
 
 ```
@@ -63,8 +64,9 @@ years outside the daily look-ahead window.
 - **Fan-out (optional)** — `critical`/`high` events pushed to a generic webhook, Slack,
   Discord, or email. Each channel is a no-op unless its secret is set; failures are
   best-effort (Issues remain the complete record).
-- **Status page** — a static HTML page (Apophis countdown, noteworthy risk objects,
-  upcoming approaches, recent fireballs) served from GitHub Pages.
+- **Pages observatory** — an accessible, responsive dashboard with a live Apophis
+  countdown, plain-language safety posture, full searchable Sentry catalog, upcoming
+  approaches, recent fireballs, source health, and downloadable JSON.
 
 ---
 
@@ -115,7 +117,8 @@ python -m nasa_defense --dry-run
 python -m nasa_defense
 ```
 
-State is written under `state/` and the page under `site/index.html`.
+State is written under `state/`; the generated Pages artifact lives under `site/`
+(`index.html`, frontend assets, `status.json`, and public source datasets).
 
 ## Environment variables
 
@@ -154,7 +157,8 @@ src/nasa_defense/
   state.py         # atomic JSON snapshot load/save
   detect.py        # the materiality engine (pure: previous + current -> events)
   render.py        # Event -> Markdown (deterministic templates)
-  site.py          # snapshots -> static HTML page
+  site.py          # snapshots -> static observatory + public JSON
+  site_assets/     # version-controlled CSS and progressive JavaScript
   watch.py         # orchestrator (the only place wiring side effects)
   sources/         # one thin httpx client per endpoint (sentry, cad, fireball, neows, apophis)
   sinks/           # github_issues (system of record) + fanout (optional channels)

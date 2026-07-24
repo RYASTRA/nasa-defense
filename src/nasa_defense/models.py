@@ -1,8 +1,9 @@
 """Dataclasses for the tracked near-Earth-object records and the events derived from them."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import date, datetime
+from datetime import UTC, date, datetime
 from typing import Any
 
 from . import config
@@ -15,14 +16,20 @@ def severity_at_least(sev: str, floor: str) -> bool:
     return SEVERITY_RANK[sev] >= SEVERITY_RANK[floor]
 
 
-def parse_cad_date(cd: str) -> date | None:
-    """Parse a CNEOS CAD calendar-date string (e.g. '2029-Apr-13 21:46') to a date."""
+def parse_cad_datetime(cd: str) -> datetime | None:
+    """Parse a CNEOS CAD calendar timestamp as an aware UTC datetime."""
     for fmt in ("%Y-%b-%d %H:%M", "%Y-%b-%d"):
         try:
-            return datetime.strptime(cd.strip(), fmt).date()
+            return datetime.strptime(cd.strip(), fmt).replace(tzinfo=UTC)
         except ValueError:
             continue
     return None
+
+
+def parse_cad_date(cd: str) -> date | None:
+    """Parse a CNEOS CAD calendar-date string (e.g. '2029-Apr-13 21:46') to a date."""
+    parsed = parse_cad_datetime(cd)
+    return None if parsed is None else parsed.date()
 
 
 @dataclass(frozen=True)

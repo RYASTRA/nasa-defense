@@ -85,6 +85,9 @@ jobs:
 
   publish:
     needs: watch
+    # The watcher deliberately renders a degraded-health page before escalating a
+    # sustained source outage. Publish that status instead of leaving a stale green page.
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages

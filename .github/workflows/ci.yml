@@ -20,3 +20,8 @@ jobs:
       - run: pip install -e ".[dev]"
       - run: ruff check src
       - run: pylint src/nasa_defense
+      - name: Smoke-test the generated Pages site
+        run: >-
+          python -c "from pathlib import Path;
+          from nasa_defense.site import write;
+          write(Path('state'), Path('/tmp/nasa-defense-site'))"
